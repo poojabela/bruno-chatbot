@@ -82,7 +82,7 @@ const Home: React.FC = () => {
                 <div className="prose prose-sm">
                   <ReactMarkdown
                     components={{
-                      a: ({ node, ...props }) => (
+                      a: ({ ...props }) => (
                         <a
                           {...props}
                           className="text-blue-600 hover:underline"

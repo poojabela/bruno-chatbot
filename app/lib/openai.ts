@@ -1,4 +1,4 @@
-import { streamText, embed } from "ai";
+import { streamText, embed, type CoreMessage } from "ai";
 import { openai } from "@ai-sdk/openai";
 
 export async function getEmbedding(text: string) {
@@ -10,7 +10,7 @@ export async function getEmbedding(text: string) {
   return embedding;
 }
 
-export function generateResponse(messages: any[], context: string) {
+export function generateResponse(messages: CoreMessage[], context: string) {
   const result = streamText({
     model: openai("gpt-4o-mini"),
     messages,
