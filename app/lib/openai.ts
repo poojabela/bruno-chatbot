@@ -1,6 +1,5 @@
 import { streamText, embed } from "ai";
 import { openai } from "@ai-sdk/openai";
-import { get } from "node:https";
 
 export async function getEmbedding(text: string) {
   const { embedding } = await embed({
