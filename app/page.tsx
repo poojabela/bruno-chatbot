@@ -7,7 +7,7 @@ import { useChat } from "ai/react";
 import { cn } from "@/app/lib/utils";
 
 const Home: React.FC = () => {
-  const [isFocused, setIsFocused] = useState<boolean>(false);
+  const [isFocused, setIsFocused] = useState<boolean>(true);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const { messages, input, handleInputChange, handleSubmit, isLoading } =
@@ -47,19 +47,11 @@ const Home: React.FC = () => {
         )}
 
         {messages.map((message, index) => (
-          <div
-            key={index}
-            className={cn(
-              "flex items-start gap-4 max-w-xl",
-              message.role === "user" ? "mr-auto" : "ml-auto justify-end"
-            )}
-          >
+          <div key={index} className={cn("flex items-start gap-4 max-w-xl")}>
             <div
               className={cn(
-                "w-8 h-8 rounded-full flex items-center justify-center",
-                message.role === "user"
-                  ? "bg-blue-500 order-2"
-                  : "bg-gray-600 order-1"
+                "w-8 h-8 rounded-full flex items-center justify-center shrink-0",
+                message.role === "user" ? "bg-blue-500" : "bg-gray-600"
               )}
             >
               {message.role === "user" ? (
@@ -72,29 +64,28 @@ const Home: React.FC = () => {
             {/* Message Bubble */}
             <div
               className={cn(
-                "rounded-2xl px-4 py-2 max-w-lg",
+                "rounded-2xl px-4 py-2 max-w-xl",
                 message.role === "user"
-                  ? "bg-blue-500 text-white order-1"
-                  : "bg-gray-100 text-gray-800 order-2"
+                  ? "bg-blue-500 text-white"
+                  : "bg-gray-100 text-gray-800"
               )}
             >
               {message.role === "assistant" ? (
-                <div className="prose prose-sm">
-                  <ReactMarkdown
-                    components={{
-                      a: ({ ...props }) => (
-                        <a
-                          {...props}
-                          className="text-blue-600 hover:underline"
-                          target="_blank"
-                          rel="noreferrer"
-                        />
-                      ),
-                    }}
-                  >
-                    {message.content}
-                  </ReactMarkdown>
-                </div>
+                <ReactMarkdown
+                  components={{
+                    a: ({ ...props }) => (
+                      <a
+                        {...props}
+                        className="text-blue-600 hover:underline"
+                        target="_blank"
+                        rel="noreferrer"
+                      />
+                    ),
+                  }}
+                  className="prose prose-sm"
+                >
+                  {message.content}
+                </ReactMarkdown>
               ) : (
                 <p>{message.content}</p>
               )}
@@ -103,9 +94,9 @@ const Home: React.FC = () => {
         ))}
 
         {isLoading && (
-          <div className="flex justify-end ml-auto items-start gap-4 max-w-xl">
+          <div className="flex items-start gap-4 max-w-xl">
             <div className="w-8 h-8 rounded-full flex items-center justify-center bg-gray-600">
-              <Bot className="w-5 h-5 text-white" />
+              <Bot className="w-5 h-5 text-white shrink-0" />
             </div>
             <div className="rounded-2xl bg-gray-100">
               <TypingIndicator />
@@ -150,6 +141,7 @@ const Home: React.FC = () => {
                 "text-base"
               )}
               placeholder="Ask anything..."
+              autoFocus
             />
 
             <div className="absolute inset-y-0 right-4 flex items-center space-x-2">
